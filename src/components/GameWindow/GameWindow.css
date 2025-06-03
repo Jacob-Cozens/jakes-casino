@@ -1,0 +1,14 @@
+.game-window {
+  text-align: center;
+  position: relative;
+  max-height: 610px;
+  max-width: 496px;
+  width: 100%;
+  padding: 0;
+  background-color: aliceblue;
+  margin: auto;
+  border-radius: 16px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 2px solid #8a5608;
+}
