@@ -1,5 +1,7 @@
 import { useState, useEffect, act } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import Homepage from "../Homepage/Homepage";
 import Main from "../Main/Main";
 import Header from "../Header/Header";
 import { getDeck, drawCards } from "../../utils/deckApi";
@@ -27,12 +29,21 @@ function App() {
   }, []);
 
   return (
-    <div className="page">
-      <div className="page__content">
-        <Header />
-        <Main getDeck={handleGetDeck} drawCards={handleDrawCards} />
+    <BrowserRouter>
+      <div className="page">
+        <div className="page__content">
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route
+              path="game"
+              element={
+                <Main getDeck={handleGetDeck} drawCards={handleDrawCards} />
+              }
+            />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
 

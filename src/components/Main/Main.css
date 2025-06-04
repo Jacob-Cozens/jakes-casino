@@ -5,11 +5,10 @@
   border: 2px solid #8a5608;
 }
 
-.main__button {
+.main__btn {
   display: block;
   margin: auto;
   border-radius: 8px;
   border: 2px solid #8a5608;
   cursor: pointer;
 }
-

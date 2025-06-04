@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Main.css";
 import GameWindow from "../GameWindow/GameWindow";
 
@@ -9,9 +10,12 @@ function Main({ getDeck, drawCards }) {
         BlackJack by pressing the button below.
       </p>
       <GameWindow />
-      <button type="button" onClick={getDeck} className="main__button">
+      <button type="button" onClick={getDeck} className="main__btn">
         Play!
       </button>
+      <Link to="/">
+        <button className="main__btn-home">Home</button>
+      </Link>
     </main>
   );
 }
