@@ -8,11 +8,7 @@ import { getDeck, drawCards } from "../../utils/deckApi";
 import "./App.css";
 
 function App() {
-  const handleGetDeck = () => {
-    getDeck().then((data) => {
-      console.log("Deck fetched on mount", data);
-    });
-  };
+  const [deckId, setDeckId] = useState([]);
 
   const handleDrawCards = () => {
     drawCards().then((data) => {
@@ -21,24 +17,22 @@ function App() {
   };
 
   useEffect(() => {
-    drawCards();
-  }, []);
-
-  useEffect(() => {
-    getDeck();
+    getDeck().then((data) => {
+      console.log("Deck fetch has been mounted", data);
+      setDeckId(data);
+    });
   }, []);
 
   return (
     <BrowserRouter>
       <div className="page">
         <div className="page__content">
+          <Header />
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route
               path="game"
-              element={
-                <Main getDeck={handleGetDeck} drawCards={handleDrawCards} />
-              }
+              element={<Main drawCards={handleDrawCards} deckId={deckId} />}
             />
           </Routes>
         </div>

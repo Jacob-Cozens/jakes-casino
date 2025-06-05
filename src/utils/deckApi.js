@@ -20,7 +20,7 @@ export const getDeck = () => {
 };
 
 export const drawCards = () => {
-  return fetch(`https://deckofcardsapi.com/api/deck/new/draw/?count=2`).then(
-    processResponse
-  );
+  return fetch(
+    `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`
+  ).then(processResponse);
 };

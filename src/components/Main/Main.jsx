@@ -10,8 +10,8 @@ function Main({ getDeck, drawCards }) {
         BlackJack by pressing the button below.
       </p>
       <GameWindow />
-      <button type="button" onClick={getDeck} className="main__btn">
-        Play!
+      <button type="button" onClick={drawCards} className="main__btn">
+        Start game
       </button>
       <Link to="/">
         <button className="main__btn-home">Home</button>
