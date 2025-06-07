@@ -24,3 +24,9 @@ export const drawCards = (deckId) => {
     `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`
   ).then(processResponse);
 };
+
+export const drawDealerCards = (deckId) => {
+  return fetch(
+    `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`
+  ).then(processResponse);
+};

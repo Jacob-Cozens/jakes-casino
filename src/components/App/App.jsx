@@ -5,7 +5,7 @@ import Homepage from "../Homepage/Homepage";
 import Main from "../Main/Main";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import { getDeck, drawCards } from "../../utils/deckApi";
+import { getDeck, drawCards, drawDealerCards } from "../../utils/deckApi";
 import "./App.css";
 
 function App() {
@@ -15,6 +15,11 @@ function App() {
   const handleDrawCards = () => {
     drawCards(deckId).then((data) => {
       console.log("Cards have been drawn", data);
+      setCardImage(data.image);
+    });
+    drawDealerCards(deckId).then((data) => {
+      console.log("Dealer cards have been drawn", data);
+      setCardImage(data.image);
     });
   };
 
