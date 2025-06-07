@@ -9,20 +9,19 @@ import { getDeck, drawCards } from "../../utils/deckApi";
 import "./App.css";
 
 function App() {
-  const [data, setData] = useState([]);
   const [deckId, setDeckId] = useState([]);
+  const [cardImage, setCardImage] = useState([]);
 
   const handleDrawCards = () => {
-    drawCards().then((data) => {
+    drawCards(deckId).then((data) => {
       console.log("Cards have been drawn", data);
-      setDeckId(data.deck_id);
     });
   };
 
   useEffect(() => {
     getDeck().then((data) => {
       console.log("Deck fetch has been mounted", data);
-      setData(data);
+      setDeckId(data.deck_id);
     });
   }, []);
 

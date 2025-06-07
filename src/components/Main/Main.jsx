@@ -11,7 +11,7 @@ function Main({ getDeck, drawCards }) {
       </p>
       <GameWindow />
       <button type="button" onClick={drawCards} className="main__btn">
-        Start game
+        Draw Cards
       </button>
       <Link to="/">
         <button className="main__btn-home">Home</button>
