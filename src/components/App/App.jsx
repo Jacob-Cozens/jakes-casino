@@ -21,8 +21,6 @@ function App() {
   const handleDrawCards = () => {
     drawCards(deckId).then((data) => {
       console.log("Cards have been drawn", data);
-      setCardImage(data.image, 0);
-      console.log(cardImage);
     });
     drawDealerCards(deckId).then((data) => {
       console.log("Dealer cards have been drawn", data);
@@ -30,10 +28,17 @@ function App() {
     setShowButton(false);
   };
 
+  const handleHitMe = () => {
+    hitMe(deckId).then((data) => {
+      console.log("You've hit!", data);
+    });
+  };
+
   useEffect(() => {
     getDeck().then((data) => {
       console.log("Deck fetch has been mounted", data);
       setDeckId(data.deck_id);
+      setCardImage(data.image);
     });
   }, []);
 
@@ -51,6 +56,7 @@ function App() {
                   drawCards={handleDrawCards}
                   deckId={deckId}
                   showButton={showButton}
+                  hitMe={handleHitMe}
                 />
               }
             />
