@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 import "./Main.css";
 import GameWindow from "../GameWindow/GameWindow";
 
-function Main({ getDeck, drawCards }) {
+function Main({ drawCards, showButton }) {
+  const buttonClassName = showButton ? "main__btn" : "main__btn-hidden";
+
   return (
     <main className="main">
       <p className="main__text">
@@ -10,7 +12,7 @@ function Main({ getDeck, drawCards }) {
         BlackJack by pressing the button below.
       </p>
       <GameWindow />
-      <button type="button" onClick={drawCards} className="main__btn">
+      <button type="button" onClick={drawCards} className={buttonClassName}>
         Draw Cards
       </button>
       <Link to="/">

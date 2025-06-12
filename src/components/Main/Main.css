@@ -12,3 +12,7 @@
   border: 2px solid #8a5608;
   cursor: pointer;
 }
+
+.main__btn-hidden {
+  visibility: hidden;
+}

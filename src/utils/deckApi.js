@@ -30,3 +30,9 @@ export const drawDealerCards = (deckId) => {
     `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`
   ).then(processResponse);
 };
+
+export const hitMe = (deckId) => {
+  return fetch(
+    `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`
+  ).then(processResponse);
+};

@@ -5,22 +5,29 @@ import Homepage from "../Homepage/Homepage";
 import Main from "../Main/Main";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import { getDeck, drawCards, drawDealerCards } from "../../utils/deckApi";
+import {
+  getDeck,
+  drawCards,
+  drawDealerCards,
+  hitMe,
+} from "../../utils/deckApi";
 import "./App.css";
 
 function App() {
   const [deckId, setDeckId] = useState([]);
   const [cardImage, setCardImage] = useState([]);
+  const [showButton, setShowButton] = useState(true);
 
   const handleDrawCards = () => {
     drawCards(deckId).then((data) => {
       console.log("Cards have been drawn", data);
-      setCardImage(data.image);
+      setCardImage(data.image, 0);
+      console.log(cardImage);
     });
     drawDealerCards(deckId).then((data) => {
       console.log("Dealer cards have been drawn", data);
-      setCardImage(data.image);
     });
+    setShowButton(false);
   };
 
   useEffect(() => {
@@ -39,7 +46,13 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route
               path="game"
-              element={<Main drawCards={handleDrawCards} deckId={deckId} />}
+              element={
+                <Main
+                  drawCards={handleDrawCards}
+                  deckId={deckId}
+                  showButton={showButton}
+                />
+              }
             />
           </Routes>
           <Footer />
