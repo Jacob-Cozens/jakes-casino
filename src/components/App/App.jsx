@@ -15,15 +15,21 @@ import "./App.css";
 
 function App() {
   const [deckId, setDeckId] = useState([]);
-  const [cardImage, setCardImage] = useState([]);
+  const [drawnCards, setDrawnCards] = useState([]);
+  const [drawnDealerCards, setDrawnDealerCards] = useState([]);
+  const [hitCard, setHitCard] = useState([]);
   const [showButton, setShowButton] = useState(true);
 
   const handleDrawCards = () => {
     drawCards(deckId).then((data) => {
       console.log("Cards have been drawn", data);
+      setDrawnCards(data?.cards);
+      console.log(drawnCards);
     });
     drawDealerCards(deckId).then((data) => {
       console.log("Dealer cards have been drawn", data);
+      setDrawnDealerCards(data?.cards);
+      console.log(drawnDealerCards);
     });
     setShowButton(false);
   };
@@ -31,6 +37,8 @@ function App() {
   const handleHitMe = () => {
     hitMe(deckId).then((data) => {
       console.log("You've hit!", data);
+      setHitCard(data?.cards);
+      console.log(hitCard);
     });
   };
 
@@ -38,7 +46,6 @@ function App() {
     getDeck().then((data) => {
       console.log("Deck fetch has been mounted", data);
       setDeckId(data.deck_id);
-      setCardImage(data.image);
     });
   }, []);
 
@@ -46,7 +53,6 @@ function App() {
     <BrowserRouter>
       <div className="page">
         <div className="page__content">
-          <Header />
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route
@@ -54,9 +60,12 @@ function App() {
               element={
                 <Main
                   drawCards={handleDrawCards}
+                  drawnCards={drawnCards}
+                  drawnDealerCards={drawnDealerCards}
                   deckId={deckId}
                   showButton={showButton}
                   hitMe={handleHitMe}
+                  hitCard={hitCard}
                 />
               }
             />
