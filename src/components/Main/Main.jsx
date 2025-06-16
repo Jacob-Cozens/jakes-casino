@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
+import UserCards from "../CardSection/CardSection";
 import "./Main.css";
-import GameWindow from "../GameWindow/GameWindow";
 
 function Main({ drawCards, hitMe, showButton }) {
   const buttonClassName = showButton ? "main__btn" : "main__btn-hidden";
@@ -12,7 +12,10 @@ function Main({ drawCards, hitMe, showButton }) {
         Hello, and welcome to Jake's Casino! Feel free to play a few rounds of
         BlackJack by pressing the button below.
       </p>
-      <GameWindow />
+      <Link to="/">
+        <button className="main__btn-home">Home</button>
+      </Link>
+      <UserCards />
       <button type="button" onClick={drawCards} className={buttonClassName}>
         Draw Cards
       </button>
@@ -22,9 +25,6 @@ function Main({ drawCards, hitMe, showButton }) {
       <button type="button" className={buttonClassNameHit}>
         Stay...
       </button>
-      <Link to="/">
-        <button className="main__btn-home">Home</button>
-      </Link>
     </main>
   );
 }
