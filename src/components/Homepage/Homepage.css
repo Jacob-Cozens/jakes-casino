@@ -1,3 +1,16 @@
 .homepage__btn {
-  margin: 10px 50px 10px 10px;
+  position: absolute;
+  border-radius: 8px;
+  width: 115px;
+  height: 60px;
+  cursor: pointer;
+  background-color: #00a2e8;
+  border: 2px solid #ff7f27;
+  left: 740px;
+  bottom: 125px;
+  transition: opacity 1s ease;
+}
+
+.homepage__btn:hover {
+  opacity: 50%;
 }
