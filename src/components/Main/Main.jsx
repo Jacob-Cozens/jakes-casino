@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
-import UserCards from "../CardSection/CardSection";
+import CardSection from "../CardSection/CardSection";
 import "./Main.css";
 
-function Main({ drawCards, hitMe, showButton }) {
+function Main({ drawCards, hitMe, showButton, drawnCards }) {
   const buttonClassName = showButton ? "main__btn" : "main__btn-hidden";
   const buttonClassNameHit = showButton ? "main__btn-hidden" : "main__btn";
+
+  const showCards = () => {
+    drawnCards?.map((card) => {
+      return <img src={card.image} alt="" height={250} width={250} />;
+    });
+  };
 
   return (
     <main className="main">
@@ -15,9 +21,12 @@ function Main({ drawCards, hitMe, showButton }) {
       <Link to="/">
         <button className="main__btn-home">Home</button>
       </Link>
-      <UserCards />
+      <CardSection showCards={showCards} />
       <button type="button" onClick={drawCards} className={buttonClassName}>
         Draw Cards
+      </button>
+      <button type="button" onClick={showCards} className={buttonClassNameHit}>
+        Show Cards
       </button>
       <button type="button" onClick={hitMe} className={buttonClassNameHit}>
         Hit Me!

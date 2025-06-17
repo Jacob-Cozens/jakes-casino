@@ -19,17 +19,16 @@ function App() {
   const [drawnDealerCards, setDrawnDealerCards] = useState([]);
   const [hitCard, setHitCard] = useState([]);
   const [showButton, setShowButton] = useState(true);
+  const [cardImage, setCardImage] = useState([]);
 
   const handleDrawCards = () => {
     drawCards(deckId).then((data) => {
       console.log("Cards have been drawn", data);
       setDrawnCards(data?.cards);
-      console.log(drawnCards);
     });
     drawDealerCards(deckId).then((data) => {
       console.log("Dealer cards have been drawn", data);
       setDrawnDealerCards(data?.cards);
-      console.log(drawnDealerCards);
     });
     setShowButton(false);
   };
@@ -38,7 +37,6 @@ function App() {
     hitMe(deckId).then((data) => {
       console.log("You've hit!", data);
       setHitCard(data?.cards);
-      console.log(hitCard);
     });
   };
 
