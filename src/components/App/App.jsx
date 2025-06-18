@@ -5,6 +5,7 @@ import Homepage from "../Homepage/Homepage";
 import Main from "../Main/Main";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import UserPage from "../UserPage/UserPage";
 import {
   getDeck,
   drawCards,
@@ -19,6 +20,7 @@ function App() {
   const [drawnDealerCards, setDrawnDealerCards] = useState([]);
   const [hitCard, setHitCard] = useState([]);
   const [showButton, setShowButton] = useState(true);
+  const [showCards, setShowCards] = useState(false);
   const [cardImage, setCardImage] = useState([]);
 
   const handleDrawCards = () => {
@@ -31,6 +33,7 @@ function App() {
       setDrawnDealerCards(data?.cards);
     });
     setShowButton(false);
+    setShowCards(true);
   };
 
   const handleHitMe = () => {
@@ -53,6 +56,7 @@ function App() {
         <div className="page__content">
           <Routes>
             <Route path="/" element={<Homepage />} />
+            <Route path="user" element={<UserPage />} />
             <Route
               path="game"
               element={
@@ -62,6 +66,7 @@ function App() {
                   drawnDealerCards={drawnDealerCards}
                   deckId={deckId}
                   showButton={showButton}
+                  showCards={showCards}
                   hitMe={handleHitMe}
                   hitCard={hitCard}
                 />

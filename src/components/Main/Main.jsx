@@ -1,16 +1,18 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import CardSection from "../CardSection/CardSection";
 import "./Main.css";
 
-function Main({ drawCards, hitMe, showButton, drawnCards }) {
+function Main({ drawCards, hitMe, showButton, drawnCards, showCards }) {
   const buttonClassName = showButton ? "main__btn" : "main__btn-hidden";
   const buttonClassNameHit = showButton ? "main__btn-hidden" : "main__btn";
+  
 
-  const showCards = () => {
-    drawnCards?.map((card) => {
-      return <img src={card.image} alt="" height={250} width={250} />;
-    });
-  };
+  // const showCards = () => {
+  //   drawnCards?.map((card) => {
+  //     return <img src={card.image} alt="" height={250} width={250} />;
+  //   });
+  // };
 
   return (
     <main className="main">
@@ -21,7 +23,10 @@ function Main({ drawCards, hitMe, showButton, drawnCards }) {
       <Link to="/">
         <button className="main__btn-home">Home</button>
       </Link>
-      <CardSection showCards={showCards} />
+      <Link to="/user">
+        <button className="main__btn-user">User</button>
+      </Link>
+      <CardSection showCards={showCards} drawnCards={drawnCards} />
       <button type="button" onClick={drawCards} className={buttonClassName}>
         Draw Cards
       </button>

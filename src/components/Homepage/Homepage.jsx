@@ -12,6 +12,9 @@ function Homepage() {
           <img src={play} alt="play" />
         </button>
       </Link>
+      <Link to="/user">
+        <button>User</button>
+      </Link>
     </section>
   );
 }
