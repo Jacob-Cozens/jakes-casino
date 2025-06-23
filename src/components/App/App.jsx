@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Homepage from "../Homepage/Homepage";
 import Main from "../Main/Main";
-import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import UserPage from "../UserPage/UserPage";
 import {
@@ -17,11 +16,18 @@ import "./App.css";
 function App() {
   const [deckId, setDeckId] = useState([]);
   const [drawnCards, setDrawnCards] = useState([]);
+  const [playerCount, setPlayerCount] = useState(0);
   const [drawnDealerCards, setDrawnDealerCards] = useState([]);
+  const [dealerCount, setDealerCount] = useState(0);
   const [hitCard, setHitCard] = useState([]);
+  const [isBlackJack, setIsBlackJack] = useState(false);
+  const [isPlayerBusted, setIsPlayerBusted] = useState(false);
+  const [isDealersTurn, setIsDealersTurn] = useState(false);
+  const [isDealerBusted, setIsDealerBusted] = useState(false);
+  const [isHandComplete, setIsHandComplete] = useState(true);
   const [showButton, setShowButton] = useState(true);
   const [showCards, setShowCards] = useState(false);
-  const [cardImage, setCardImage] = useState([]);
+  const [winner, setWinner] = useState("");
 
   const handleDrawCards = () => {
     drawCards(deckId).then((data) => {
@@ -44,6 +50,12 @@ function App() {
   };
 
   useEffect(() => {
+    drawnCards?.map((card) => {
+      setPlayerCount(card.value);
+    });
+  });
+
+  useEffect(() => {
     getDeck().then((data) => {
       console.log("Deck fetch has been mounted", data);
       setDeckId(data.deck_id);
@@ -63,7 +75,9 @@ function App() {
                 <Main
                   drawCards={handleDrawCards}
                   drawnCards={drawnCards}
+                  playerCount={playerCount}
                   drawnDealerCards={drawnDealerCards}
+                  dealerCount={dealerCount}
                   deckId={deckId}
                   showButton={showButton}
                   showCards={showCards}

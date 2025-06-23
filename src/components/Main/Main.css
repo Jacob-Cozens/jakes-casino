@@ -6,16 +6,26 @@
   border: 2px solid #8a5608;
 }
 
+.main__caption {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.main__caption-dealer {
+  margin-left: 860px;
+}
+
 .main__btn {
   display: block;
-  margin: 65px auto;
+  margin: 4px auto;
   border-radius: 8px;
   border: 2px solid #8a5608;
   cursor: pointer;
 }
 
 .main__btn-home {
-  margin-left: 650px;
+  margin: 4px 650px;
   border-radius: 8px;
   border: 2px solid #8a5608;
   cursor: pointer;

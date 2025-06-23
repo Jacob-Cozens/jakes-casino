@@ -3,16 +3,20 @@ import { Link } from "react-router-dom";
 import CardSection from "../CardSection/CardSection";
 import "./Main.css";
 
-function Main({ drawCards, hitMe, showButton, drawnCards, showCards }) {
+function Main({
+  drawCards,
+  hitMe,
+  hitCard,
+  showButton,
+  drawnCards,
+  playerCount,
+  setPlayerCount,
+  drawnDealerCards,
+  dealerCount,
+  showCards,
+}) {
   const buttonClassName = showButton ? "main__btn" : "main__btn-hidden";
   const buttonClassNameHit = showButton ? "main__btn-hidden" : "main__btn";
-  
-
-  // const showCards = () => {
-  //   drawnCards?.map((card) => {
-  //     return <img src={card.image} alt="" height={250} width={250} />;
-  //   });
-  // };
 
   return (
     <main className="main">
@@ -26,12 +30,20 @@ function Main({ drawCards, hitMe, showButton, drawnCards, showCards }) {
       <Link to="/user">
         <button className="main__btn-user">User</button>
       </Link>
-      <CardSection showCards={showCards} drawnCards={drawnCards} />
+      <div className="main__caption">
+        <p className="main__caption-user">{playerCount}</p>
+        <p className="main__caption-dealer">Dealer Cards</p>
+      </div>
+      <CardSection
+        showCards={showCards}
+        drawnCards={drawnCards}
+        drawnDealerCards={drawnDealerCards}
+        hitCard={hitCard}
+        setPlayerCount={setPlayerCount}
+        playerCount={playerCount}
+      />
       <button type="button" onClick={drawCards} className={buttonClassName}>
         Draw Cards
-      </button>
-      <button type="button" onClick={showCards} className={buttonClassNameHit}>
-        Show Cards
       </button>
       <button type="button" onClick={hitMe} className={buttonClassNameHit}>
         Hit Me!
