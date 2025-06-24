@@ -29,6 +29,15 @@ function App() {
   const [showCards, setShowCards] = useState(false);
   const [winner, setWinner] = useState("");
 
+  const cardObj = {
+    JACK: 10,
+    QUEEN: 10,
+    KING: 10,
+    ACE: 11,
+  };
+
+  const cardMap = new Map(Object.entries(cardObj));
+
   const handleDrawCards = () => {
     drawCards(deckId).then((data) => {
       console.log("Cards have been drawn", data);
@@ -50,15 +59,6 @@ function App() {
   };
 
   useEffect(() => {
-    const cardObj = {
-      JACK: 10,
-      QUEEN: 10,
-      KING: 10,
-      ACE: 11,
-    };
-
-    const cardMap = new Map(Object.entries(cardObj));
-
     const sum = drawnCards.reduce((acc, card) => {
       if (cardMap.has(card.value)) {
         return acc + cardMap.get(card.value);
@@ -69,15 +69,6 @@ function App() {
   });
 
   useEffect(() => {
-    const cardObj = {
-      JACK: 10,
-      QUEEN: 10,
-      KING: 10,
-      ACE: 11,
-    };
-
-    const cardMap = new Map(Object.entries(cardObj));
-
     const sum = drawnDealerCards.reduce((acc, card) => {
       if (cardMap.has(card.value)) {
         return acc + cardMap.get(card.value);
@@ -85,6 +76,16 @@ function App() {
       return acc + Number(card.value);
     }, 0);
     setDealerCount(sum);
+  });
+
+  useEffect(() => {
+    const newSum = hitCard.reduce((playerCount, card) => {
+      if (cardMap.has(card.value)) {
+        return acc + cardMap.get(card.value);
+      }
+      return playerCount + Number(card.value);
+    });
+    setPlayerCount(newSum);
   });
 
   useEffect(() => {

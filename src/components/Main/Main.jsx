@@ -31,8 +31,8 @@ function Main({
         <button className="main__btn-user">User</button>
       </Link>
       <div className="main__caption">
-        <p className="main__caption-user">{playerCount}</p>
-        <p className="main__caption-dealer">{dealerCount}</p>
+        <p className="main__caption-user">User Score: {playerCount}</p>
+        <p className="main__caption-dealer">Dealer Score: {dealerCount}</p>
       </div>
       <CardSection
         showCards={showCards}
