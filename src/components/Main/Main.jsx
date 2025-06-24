@@ -32,15 +32,13 @@ function Main({
       </Link>
       <div className="main__caption">
         <p className="main__caption-user">{playerCount}</p>
-        <p className="main__caption-dealer">Dealer Cards</p>
+        <p className="main__caption-dealer">{dealerCount}</p>
       </div>
       <CardSection
         showCards={showCards}
         drawnCards={drawnCards}
         drawnDealerCards={drawnDealerCards}
         hitCard={hitCard}
-        setPlayerCount={setPlayerCount}
-        playerCount={playerCount}
       />
       <button type="button" onClick={drawCards} className={buttonClassName}>
         Draw Cards

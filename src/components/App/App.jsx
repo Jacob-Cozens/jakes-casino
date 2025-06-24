@@ -50,9 +50,41 @@ function App() {
   };
 
   useEffect(() => {
-    drawnCards?.map((card) => {
-      setPlayerCount(card.value);
-    });
+    const cardObj = {
+      JACK: 10,
+      QUEEN: 10,
+      KING: 10,
+      ACE: 11,
+    };
+
+    const cardMap = new Map(Object.entries(cardObj));
+
+    const sum = drawnCards.reduce((acc, card) => {
+      if (cardMap.has(card.value)) {
+        return acc + cardMap.get(card.value);
+      }
+      return acc + Number(card.value);
+    }, 0);
+    setPlayerCount(sum);
+  });
+
+  useEffect(() => {
+    const cardObj = {
+      JACK: 10,
+      QUEEN: 10,
+      KING: 10,
+      ACE: 11,
+    };
+
+    const cardMap = new Map(Object.entries(cardObj));
+
+    const sum = drawnDealerCards.reduce((acc, card) => {
+      if (cardMap.has(card.value)) {
+        return acc + cardMap.get(card.value);
+      }
+      return acc + Number(card.value);
+    }, 0);
+    setDealerCount(sum);
   });
 
   useEffect(() => {
