@@ -38,15 +38,35 @@ function App() {
 
   const cardMap = new Map(Object.entries(cardObj));
 
+  const sum = () => {
+    drawnCards.reduce((acc, card) => {
+      if (cardMap.has(card.value)) {
+        return acc + cardMap.get(card.value);
+      }
+      return acc + Number(card.value);
+    }, 0);
+  };
+
+  const dealerSum = () => {
+    drawnDealerCards.reduce((acc, card) => {
+      if (cardMap.has(card.value)) {
+        return acc + cardMap.get(card.value);
+      }
+      return acc + Number(card.value);
+    }, 0);
+  };
+
   const handleDrawCards = () => {
     drawCards(deckId).then((data) => {
       console.log("Cards have been drawn", data);
       setDrawnCards(data?.cards);
+      setPlayerCount(sum);
     });
 
     drawDealerCards(deckId).then((data) => {
       console.log("Dealer cards have been drawn", data);
       setDrawnDealerCards(data?.cards);
+      setDealerCount(dealerSum);
     });
     setShowButton(false);
     setShowCards(true);
@@ -65,26 +85,6 @@ function App() {
       setPlayerCount(newSum);
     });
   };
-
-  useEffect(() => {
-    const sum = drawnCards.reduce((acc, card) => {
-      if (cardMap.has(card.value)) {
-        return acc + cardMap.get(card.value);
-      }
-      return acc + Number(card.value);
-    }, 0);
-    setPlayerCount(sum);
-  });
-
-  useEffect(() => {
-    const sum = drawnDealerCards.reduce((acc, card) => {
-      if (cardMap.has(card.value)) {
-        return acc + cardMap.get(card.value);
-      }
-      return acc + Number(card.value);
-    }, 0);
-    setDealerCount(sum);
-  });
 
   useEffect(() => {
     getDeck().then((data) => {
