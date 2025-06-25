@@ -43,6 +43,7 @@ function App() {
       console.log("Cards have been drawn", data);
       setDrawnCards(data?.cards);
     });
+
     drawDealerCards(deckId).then((data) => {
       console.log("Dealer cards have been drawn", data);
       setDrawnDealerCards(data?.cards);
@@ -55,6 +56,13 @@ function App() {
     hitMe(deckId).then((data) => {
       console.log("You've hit!", data);
       setHitCard(data?.cards);
+      const newSum = hitCard.reduce((playerCount, card) => {
+        if (cardMap.has(card.value)) {
+          return playerCount + cardMap.get(card.value);
+        }
+        return playerCount + Number(card.value);
+      }, 0);
+      setPlayerCount(newSum);
     });
   };
 
@@ -76,16 +84,6 @@ function App() {
       return acc + Number(card.value);
     }, 0);
     setDealerCount(sum);
-  });
-
-  useEffect(() => {
-    const newSum = hitCard.reduce((playerCount, card) => {
-      if (cardMap.has(card.value)) {
-        return acc + cardMap.get(card.value);
-      }
-      return playerCount + Number(card.value);
-    });
-    setPlayerCount(newSum);
   });
 
   useEffect(() => {
