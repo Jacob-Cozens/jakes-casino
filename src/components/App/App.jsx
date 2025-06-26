@@ -40,22 +40,33 @@ function App() {
 
   const handleDrawnCards = () => {
     drawCards(deckId).then((data) => {
+      const sum = data?.cards.reduce((acc, card) => {
+        if (cardMap.has(card.value)) {
+          return acc + cardMap.get(card.value);
+        }
+        return acc + Number(card.value);
+      }, 0);
       setDrawnCards(data?.cards);
+      setPlayerCount(sum);
     });
   };
 
-  const handleUpdateCount = () => {
-    const sum = drawnCards.reduce((acc, card) => {
-      if (cardMap.has(card.value)) {
-        return acc + cardMap.get(card.value);
-      }
-      return acc + Number(card.value);
-    }, 0);
-    setPlayerCount(sum);
+  const handleDrawnDealerCards = () => {
+    drawCards(deckId).then((data) => {
+      const sum = data?.cards.reduce((acc, card) => {
+        if (cardMap.has(card.value)) {
+          return acc + cardMap.get(card.value);
+        }
+        return acc + Number(card.value);
+      }, 0);
+      setDrawnDealerCards(data?.cards);
+      setDealerCount(sum);
+    });
   };
 
   const handleDrawCards = () => {
     handleDrawnCards();
+    handleDrawnDealerCards();
     setShowButton(false);
     setShowCards(true);
   };
@@ -88,7 +99,6 @@ function App() {
                   drawCards={handleDrawCards}
                   drawnCards={drawnCards}
                   playerCount={playerCount}
-                  updateCount={handleUpdateCount}
                   drawnDealerCards={drawnDealerCards}
                   dealerCount={dealerCount}
                   deckId={deckId}

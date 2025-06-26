@@ -14,7 +14,6 @@ function Main({
   drawnDealerCards,
   dealerCount,
   showCards,
-  updateCount,
 }) {
   const buttonClassName = showButton ? "main__btn" : "main__btn-hidden";
   const buttonClassNameHit = showButton ? "main__btn-hidden" : "main__btn";
@@ -43,13 +42,6 @@ function Main({
       />
       <button type="button" onClick={drawCards} className={buttonClassName}>
         Draw Cards
-      </button>
-      <button
-        type="button"
-        onClick={updateCount}
-        className={buttonClassNameHit}
-      >
-        Update Count
       </button>
       <button type="button" onClick={hitMe} className={buttonClassNameHit}>
         Hit Me!
