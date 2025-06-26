@@ -73,8 +73,14 @@ function App() {
 
   const handleHitMe = () => {
     hitMe(deckId).then((data) => {
-      console.log("You've hit!", data);
+      const newSum = data?.cards.reduce((acc, card) => {
+        if (cardMap.has(card.value)) {
+          return acc + cardMap.get(card.value);
+        }
+        return acc + Number(card.value);
+      });
       setHitCard(data?.cards);
+      setPlayerCount(newSum);
     });
   };
 
