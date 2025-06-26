@@ -44,6 +44,13 @@ function Main({
       <button type="button" onClick={drawCards} className={buttonClassName}>
         Draw Cards
       </button>
+      <button
+        type="button"
+        onClick={updateCount}
+        className={buttonClassNameHit}
+      >
+        Update Count
+      </button>
       <button type="button" onClick={hitMe} className={buttonClassNameHit}>
         Hit Me!
       </button>

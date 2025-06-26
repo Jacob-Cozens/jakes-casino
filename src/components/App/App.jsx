@@ -56,7 +56,6 @@ function App() {
 
   const handleDrawCards = () => {
     handleDrawnCards();
-    handleUpdateCount();
     setShowButton(false);
     setShowCards(true);
   };
