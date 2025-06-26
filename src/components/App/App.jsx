@@ -38,15 +38,25 @@ function App() {
 
   const cardMap = new Map(Object.entries(cardObj));
 
-  const handleDrawCards = () => {
+  const handleDrawnCards = () => {
     drawCards(deckId).then((data) => {
-      console.log("Cards have been drawn", data);
       setDrawnCards(data?.cards);
     });
-    drawDealerCards(deckId).then((data) => {
-      console.log("Dealer cards have been drawn", data);
-      setDrawnDealerCards(data?.cards);
-    });
+  };
+
+  const handleUpdateCount = () => {
+    const sum = drawnCards.reduce((acc, card) => {
+      if (cardMap.has(card.value)) {
+        return acc + cardMap.get(card.value);
+      }
+      return acc + Number(card.value);
+    }, 0);
+    setPlayerCount(sum);
+  };
+
+  const handleDrawCards = () => {
+    handleDrawnCards();
+    handleUpdateCount();
     setShowButton(false);
     setShowCards(true);
   };
@@ -57,36 +67,6 @@ function App() {
       setHitCard(data?.cards);
     });
   };
-
-  useEffect(() => {
-    const sum = drawnCards.reduce((acc, card) => {
-      if (cardMap.has(card.value)) {
-        return acc + cardMap.get(card.value);
-      }
-      return acc + Number(card.value);
-    }, 0);
-    setPlayerCount(sum);
-  });
-
-  useEffect(() => {
-    const sum = drawnDealerCards.reduce((acc, card) => {
-      if (cardMap.has(card.value)) {
-        return acc + cardMap.get(card.value);
-      }
-      return acc + Number(card.value);
-    }, 0);
-    setDealerCount(sum);
-  });
-
-  useEffect(() => {
-    const newSum = hitCard.reduce((playerCount, card) => {
-      if (cardMap.has(card.value)) {
-        return acc + cardMap.get(card.value);
-      }
-      return playerCount + Number(card.value);
-    });
-    setPlayerCount(newSum);
-  });
 
   useEffect(() => {
     getDeck().then((data) => {
@@ -109,6 +89,7 @@ function App() {
                   drawCards={handleDrawCards}
                   drawnCards={drawnCards}
                   playerCount={playerCount}
+                  updateCount={handleUpdateCount}
                   drawnDealerCards={drawnDealerCards}
                   dealerCount={dealerCount}
                   deckId={deckId}

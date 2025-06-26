@@ -14,6 +14,7 @@ function Main({
   drawnDealerCards,
   dealerCount,
   showCards,
+  updateCount,
 }) {
   const buttonClassName = showButton ? "main__btn" : "main__btn-hidden";
   const buttonClassNameHit = showButton ? "main__btn-hidden" : "main__btn";
