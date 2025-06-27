@@ -7,6 +7,7 @@ function Main({
   drawCards,
   hitMe,
   hitCard,
+  stay,
   showButton,
   drawnCards,
   playerCount,
@@ -46,7 +47,7 @@ function Main({
       <button type="button" onClick={hitMe} className={buttonClassNameHit}>
         Hit Me!
       </button>
-      <button type="button" className={buttonClassNameHit}>
+      <button type="button" onClick={stay} className={buttonClassNameHit}>
         Stay...
       </button>
     </main>

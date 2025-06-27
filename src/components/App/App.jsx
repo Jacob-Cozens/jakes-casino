@@ -48,6 +48,15 @@ function App() {
       }, 0);
       setDrawnCards(data?.cards);
       setPlayerCount(sum);
+      if (sum === 21 && dealerCount !== 21) {
+        setIsBlackJack(true);
+        setWinner("player");
+        setIsHandComplete(true);
+      }
+      if (sum === 21 && dealerCount === 21) {
+        setWinner("push");
+        setIsHandComplete(true);
+      }
     });
   };
 
@@ -61,7 +70,50 @@ function App() {
       }, 0);
       setDrawnDealerCards(data?.cards);
       setDealerCount(sum);
+      if (sum === 21 && playerCount !== 21) {
+        setIsBlackJack(true);
+        setWinner("dealer");
+        setIsHandComplete(true);
+      }
+      if (sum === 21 && playerCount === 21) {
+        setWinner("push");
+        setIsHandComplete(true);
+      }
     });
+  };
+
+  const handleHitMe = () => {
+    hitMe(deckId).then((data) => {
+      const sum = +data?.cards.map((card) => {
+        if (cardMap.has(card.value)) {
+          return cardMap.get(card.value);
+        }
+        return Number(card.value);
+      });
+      const newSum = sum + playerCount;
+      setHitCard(data?.cards);
+      setPlayerCount(newSum);
+    });
+  };
+
+  const dealerHit = () => {
+    hitMe(deckId).then((data) => {
+      const sum = +data?.cards.map((card) => {
+        if (cardMap.has(card.value)) {
+          return cardMap.get(card.value);
+        }
+        return Number(card.value);
+      });
+      const newSum = sum + dealerCount;
+      setHitCard(data?.cards);
+      setDealerCount(newSum);
+    });
+  };
+
+  const handleStay = () => {
+    if (!isPlayerBusted && !isDealersTurn) {
+      setIsDealersTurn(true);
+    }
   };
 
   const handleDrawCards = () => {
@@ -71,25 +123,60 @@ function App() {
     setShowCards(true);
   };
 
-  const handleHitMe = () => {
-    hitMe(deckId).then((data) => {
-      const newSum = data?.cards.reduce((acc, card) => {
-        if (cardMap.has(card.value)) {
-          return acc + cardMap.get(card.value);
-        }
-        return acc + Number(card.value);
-      });
-      setHitCard(data?.cards);
-      setPlayerCount(newSum);
-    });
-  };
-
   useEffect(() => {
     getDeck().then((data) => {
       console.log("Deck fetch has been mounted", data);
       setDeckId(data.deck_id);
     });
   }, []);
+
+  useEffect(() => {
+    if (playerCount > 21) {
+      setWinner("dealer");
+      setIsPlayerBusted(true);
+      setIsHandComplete(true);
+    }
+  }, [playerCount]);
+
+  useEffect(() => {
+    if (dealerCount > 21) {
+      setWinner("player");
+      setIsDealerBusted(true);
+      setIsHandComplete(true);
+    }
+  });
+
+  useEffect(() => {
+    if (
+      isDealersTurn &&
+      dealerCount < 17 &&
+      !isPlayerBusted &&
+      winner != "player"
+    ) {
+      setTimeout(() => {
+        dealerHit();
+      }, 500);
+    }
+    if (
+      isDealersTurn &&
+      dealerCount >= 17 &&
+      dealerCount <= 21 &&
+      !isPlayerBusted
+    ) {
+      if (dealerCount > playerCount) {
+        setWinner("dealer");
+        setIsHandComplete(true);
+      }
+      if (dealerCount < playerCount) {
+        setWinner("player");
+        setIsHandComplete(true);
+      }
+      if (dealerCount === playerCount) {
+        setWinner("push");
+        setIsHandComplete(true);
+      }
+    }
+  });
 
   return (
     <BrowserRouter>
@@ -112,6 +199,7 @@ function App() {
                   showCards={showCards}
                   hitMe={handleHitMe}
                   hitCard={hitCard}
+                  stay={handleStay}
                 />
               }
             />
