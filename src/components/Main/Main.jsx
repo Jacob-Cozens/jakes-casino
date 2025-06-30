@@ -11,10 +11,13 @@ function Main({
   showButton,
   drawnCards,
   playerCount,
-  setPlayerCount,
   drawnDealerCards,
   dealerCount,
   showCards,
+  winCount,
+  lossCount,
+  tieCount,
+  resetHand,
 }) {
   const buttonClassName = showButton ? "main__btn" : "main__btn-hidden";
   const buttonClassNameHit = showButton ? "main__btn-hidden" : "main__btn";
@@ -31,9 +34,17 @@ function Main({
       <Link to="/user">
         <button className="main__btn-user">User</button>
       </Link>
+      <button type="button" onClick={resetHand} className="main__btn-user">
+        Reset
+      </button>
       <div className="main__caption">
-        <p className="main__caption-user">User Score: {playerCount}</p>
-        <p className="main__caption-dealer">Dealer Score: {dealerCount}</p>
+        <p className="main__caption-user">
+          User Score: {playerCount} User Wins: {winCount}
+        </p>
+        <p className="main__caption">Tie Count: {tieCount}</p>
+        <p className="main__caption-dealer">
+          Dealer Score: {dealerCount} Dealer Wins: {lossCount}
+        </p>
       </div>
       <CardSection
         showCards={showCards}

@@ -24,10 +24,14 @@ function App() {
   const [isPlayerBusted, setIsPlayerBusted] = useState(false);
   const [isDealersTurn, setIsDealersTurn] = useState(false);
   const [isDealerBusted, setIsDealerBusted] = useState(false);
-  const [isHandComplete, setIsHandComplete] = useState(true);
+  const [isHandComplete, setIsHandComplete] = useState(false);
   const [showButton, setShowButton] = useState(true);
   const [showCards, setShowCards] = useState(false);
   const [winner, setWinner] = useState("");
+  const [winCount, setWinCount] = useState(0);
+  const [lossCount, setLossCount] = useState(0);
+  const [tieCount, setTieCount] = useState(0);
+  const [cardValue, setCardValue] = useState(0);
 
   const cardObj = {
     JACK: 10,
@@ -37,6 +41,23 @@ function App() {
   };
 
   const cardMap = new Map(Object.entries(cardObj));
+
+  const handleResetHand = () => {
+    if (isHandComplete) {
+      setIsHandComplete(false);
+      setWinner("");
+      setIsPlayerBusted(false);
+      setIsDealerBusted(false);
+      setIsDealersTurn(false);
+      setPlayerCount(0);
+      setDealerCount(0);
+      setIsBlackJack(false);
+      setDrawnCards([]);
+      setDrawnDealerCards([]);
+      setShowCards(false);
+      setShowButton(true);
+    }
+  };
 
   const handleDrawnCards = () => {
     drawCards(deckId).then((data) => {
@@ -56,6 +77,9 @@ function App() {
       if (sum === 21 && dealerCount === 21) {
         setWinner("push");
         setIsHandComplete(true);
+      }
+      if (sum > 21 && card.value === 11) {
+        setPlayerCount(sum - 10);
       }
     });
   };
@@ -83,20 +107,25 @@ function App() {
   };
 
   const handleHitMe = () => {
-    hitMe(deckId).then((data) => {
-      const sum = +data?.cards.map((card) => {
-        if (cardMap.has(card.value)) {
-          return cardMap.get(card.value);
+    if (!isHandComplete) {
+      hitMe(deckId).then((data) => {
+        const sum = +data?.cards.map((card) => {
+          if (cardMap.has(card.value)) {
+            return cardMap.get(card.value);
+          }
+          return Number(card.value);
+        });
+        const newSum = sum + playerCount;
+        setHitCard(data?.cards);
+        setPlayerCount(newSum);
+        if (playerCount === 21) {
+          handleStay();
         }
-        return Number(card.value);
       });
-      const newSum = sum + playerCount;
-      setHitCard(data?.cards);
-      setPlayerCount(newSum);
-    });
+    }
   };
 
-  const dealerHit = () => {
+  const handleDealerHit = () => {
     hitMe(deckId).then((data) => {
       const sum = +data?.cards.map((card) => {
         if (cardMap.has(card.value)) {
@@ -144,7 +173,7 @@ function App() {
       setIsDealerBusted(true);
       setIsHandComplete(true);
     }
-  });
+  }, [dealerCount]);
 
   useEffect(() => {
     if (
@@ -154,7 +183,7 @@ function App() {
       winner != "player"
     ) {
       setTimeout(() => {
-        dealerHit();
+        handleDealerHit();
       }, 500);
     }
     if (
@@ -178,6 +207,18 @@ function App() {
     }
   });
 
+  useEffect(() => {
+    if (winner === "player") {
+      setWinCount(winCount + 1);
+    }
+    if (winner === "dealer") {
+      setLossCount(lossCount + 1);
+    }
+    if (winner === "push") {
+      setTieCount(tieCount + 1);
+    }
+  }, [winner]);
+
   return (
     <BrowserRouter>
       <div className="page">
@@ -200,6 +241,10 @@ function App() {
                   hitMe={handleHitMe}
                   hitCard={hitCard}
                   stay={handleStay}
+                  winCount={winCount}
+                  lossCount={lossCount}
+                  tieCount={tieCount}
+                  resetHand={handleResetHand}
                 />
               }
             />
