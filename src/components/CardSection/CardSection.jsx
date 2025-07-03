@@ -6,17 +6,21 @@ function CardSection({
   drawnDealerCards,
   showCards,
   hitCard,
+  dealerHitCard,
   selectedCard,
   isDealersTurn,
 }) {
-  const selectedCardMap = Object.entries(selectedCard);
-  const dealerCardImages = selectedCardMap?.map((card) => {
-    return <img src={card[1]} alt="cardimage" height={250} width={250} />;
+  const selectedCardArray = Object.entries(selectedCard);
+  const dealerCardImages = drawnDealerCards?.map((card) => {
+    return <img src={card.image} alt="cardimage" height={250} width={250} />;
   });
   const playerCardImages = drawnCards?.map((card) => {
     return <img src={card.image} alt="" height={250} width={250} />;
   });
   const hitCardImage = hitCard?.map((card) => {
+    return <img src={card.image} alt="" height={250} width={250} />;
+  });
+  const dealerHitCardImage = dealerHitCard?.map((card) => {
     return <img src={card.image} alt="" height={250} width={250} />;
   });
 
@@ -28,7 +32,7 @@ function CardSection({
       </div>
       <div className="card-section__modal">
         {showCards && dealerCardImages}
-        {showCards && hitCardImage}
+        {showCards && dealerHitCardImage}
       </div>
     </div>
   );

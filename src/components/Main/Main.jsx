@@ -7,6 +7,7 @@ function Main({
   drawCards,
   hitMe,
   hitCard,
+  dealerHitCard,
   stay,
   showButton,
   drawnCards,
@@ -55,6 +56,7 @@ function Main({
         drawnCards={drawnCards}
         drawnDealerCards={drawnDealerCards}
         hitCard={hitCard}
+        dealerHitCard={dealerHitCard}
         selectedCard={selectedCard}
         isDealersTurn={isDealersTurn}
       />
