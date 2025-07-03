@@ -1,23 +1,34 @@
 import "./CardSection.css";
+import backOfCard from "../../assets/backofcard.jpg";
 
-function CardSection({ drawnCards, drawnDealerCards, showCards, hitCard }) {
+function CardSection({
+  drawnCards,
+  drawnDealerCards,
+  showCards,
+  hitCard,
+  selectedCard,
+  isDealersTurn,
+}) {
+  const selectedCardMap = Object.entries(selectedCard);
+  const dealerCardImages = selectedCardMap?.map((card) => {
+    return <img src={card[1]} alt="cardimage" height={250} width={250} />;
+  });
+  const playerCardImages = drawnCards?.map((card) => {
+    return <img src={card.image} alt="" height={250} width={250} />;
+  });
+  const hitCardImage = hitCard?.map((card) => {
+    return <img src={card.image} alt="" height={250} width={250} />;
+  });
+
   return (
     <div className="card-section">
       <div className="card-section__modal">
-        {showCards &&
-          drawnCards?.map((card) => {
-            return <img src={card.image} alt="" height={250} width={250} />;
-          })}
-        {showCards &&
-          hitCard?.map((card) => {
-            return <img src={card.image} alt="" height={250} width={250} />;
-          })}
+        {showCards && playerCardImages}
+        {showCards && hitCardImage}
       </div>
       <div className="card-section__modal">
-        {showCards &&
-          drawnDealerCards?.map((card) => {
-            return <img src={card.image} alt="" height={250} width={250} />;
-          })}
+        {showCards && dealerCardImages}
+        {showCards && hitCardImage}
       </div>
     </div>
   );

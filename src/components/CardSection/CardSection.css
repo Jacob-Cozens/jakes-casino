@@ -12,3 +12,7 @@
   border-radius: 4px;
   border: 2px solid black;
 }
+
+.card-section__cardback {
+  border-radius: 6px;
+}

@@ -18,9 +18,13 @@ function Main({
   lossCount,
   tieCount,
   resetHand,
+  isDealersTurn,
+  hiddenDealerCount,
+  selectedCard,
 }) {
   const buttonClassName = showButton ? "main__btn" : "main__btn-hidden";
   const buttonClassNameHit = showButton ? "main__btn-hidden" : "main__btn";
+  const hideDealerCount = isDealersTurn ? dealerCount : hiddenDealerCount;
 
   return (
     <main className="main">
@@ -43,7 +47,7 @@ function Main({
         </p>
         <p className="main__caption">Tie Count: {tieCount}</p>
         <p className="main__caption-dealer">
-          Dealer Score: {dealerCount} Dealer Wins: {lossCount}
+          Dealer Score: {hideDealerCount} Dealer Wins: {lossCount}
         </p>
       </div>
       <CardSection
@@ -51,6 +55,8 @@ function Main({
         drawnCards={drawnCards}
         drawnDealerCards={drawnDealerCards}
         hitCard={hitCard}
+        selectedCard={selectedCard}
+        isDealersTurn={isDealersTurn}
       />
       <button type="button" onClick={drawCards} className={buttonClassName}>
         Draw Cards
