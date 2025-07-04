@@ -16,3 +16,7 @@
 .card-section__cardback {
   border-radius: 6px;
 }
+
+.card-section__modal_back-hide {
+  visibility: hidden;
+}

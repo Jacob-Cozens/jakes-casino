@@ -27,6 +27,14 @@ function CardSection({
     return <img src={card.image} alt="" height={250} width={250} />;
   });
 
+  const hideDealerCard = isDealersTurn
+    ? dealerCardImages
+    : dealerCardImagesHidden;
+
+  const hideBackofCard = isDealersTurn
+    ? "card-section__modal_back-hide"
+    : "card-section__modal_back";
+
   return (
     <div className="card-section">
       <div className="card-section__modal">
@@ -34,8 +42,11 @@ function CardSection({
         {showCards && hitCardImage}
       </div>
       <div className="card-section__modal">
-        {showCards && dealerCardImagesHidden}
+        {showCards && hideDealerCard}
         {showCards && dealerHitCardImage}
+        <div className={hideBackofCard}>
+          {showCards && <img src={backOfCard} height={250} width={250} />}  
+        </div>
       </div>
     </div>
   );
