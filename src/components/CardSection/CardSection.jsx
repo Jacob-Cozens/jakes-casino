@@ -11,6 +11,9 @@ function CardSection({
   isDealersTurn,
 }) {
   const selectedCardArray = Object.entries(selectedCard);
+  const dealerCardImagesHidden = selectedCardArray?.map((card) => {
+    return <img src={card[1]} alt="cardimage" height={250} width={250} />;
+  });
   const dealerCardImages = drawnDealerCards?.map((card) => {
     return <img src={card.image} alt="cardimage" height={250} width={250} />;
   });
@@ -31,7 +34,7 @@ function CardSection({
         {showCards && hitCardImage}
       </div>
       <div className="card-section__modal">
-        {showCards && dealerCardImages}
+        {showCards && dealerCardImagesHidden}
         {showCards && dealerHitCardImage}
       </div>
     </div>

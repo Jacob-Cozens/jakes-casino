@@ -153,7 +153,7 @@ function App() {
         }
         setHitCard(data?.cards);
         setPlayerCount(newSum);
-        console.log("Number of aces left", hitAces);
+        setAces(hitAces);
       });
     }
   };
