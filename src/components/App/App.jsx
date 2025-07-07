@@ -36,6 +36,7 @@ function App() {
   const [tieCount, setTieCount] = useState(0);
   const [cardValue, setCardValue] = useState(0);
   const [aces, setAces] = useState(0);
+  const [dealerAces, setDealerAces] = useState(0);
 
   const cardObj = {
     JACK: 10,
@@ -45,7 +46,12 @@ function App() {
   };
 
   const cardMap = new Map(Object.entries(cardObj));
-  const selectedCardMap = Object.entries(selectedCard);
+
+  function moveCardBack() {
+    const positionElement = document.querySelector(".card-section__hit-card");
+    positionElement.style.left = 0 + "px";
+  }
+
   const handleResetHand = () => {
     if (isHandComplete) {
       setIsHandComplete(false);
@@ -64,6 +70,8 @@ function App() {
       setHitCard([]);
       setDealerHitCard([]);
       setAces(0);
+      setDealerAces(0);
+      moveCardBack();
     }
   };
 
@@ -76,9 +84,14 @@ function App() {
         return acc + Number(card.value);
       }, 0);
       let numAces = data?.cards.filter((card) => card.value === "ACE").length;
+      if (sum === 22) {
+        sum -= 10;
+        numAces -= 1;
+      }
       setAces(numAces);
       setDrawnCards(data?.cards);
       setPlayerCount(sum);
+
       if (sum === 21 && dealerCount !== 21) {
         setIsDealersTurn(true);
         setIsBlackJack(true);
@@ -108,6 +121,12 @@ function App() {
         }
         return Number(card.value);
       });
+      let numAces = data?.cards.filter((card) => card.value === "ACE").length;
+      if (sum === 22 || hiddenSum === 22) {
+        sum -= 10;
+        numAces -= 1;
+      }
+      setDealerAces(numAces);
       setDrawnDealerCards(data?.cards);
       setSelectedCard(data?.cards[1]);
       setDealerCount(sum);
@@ -132,6 +151,15 @@ function App() {
     });
   };
 
+  function moveCardLeft(pixelsToAdd) {
+    const positionElement = document.querySelector(".card-section__hit-card");
+    if (positionElement) {
+      const currentLeft = parseFloat(positionElement.style.left) || 0;
+      const newLeft = currentLeft + pixelsToAdd;
+      positionElement.style.left = newLeft + "px";
+    }
+  }
+
   const handleHitMe = () => {
     if (!isHandComplete) {
       hitMe(deckId).then((data) => {
@@ -154,6 +182,7 @@ function App() {
         setHitCard(data?.cards);
         setPlayerCount(newSum);
         setAces(hitAces);
+        moveCardLeft(50);
       });
     }
   };
@@ -167,8 +196,15 @@ function App() {
         return Number(card.value);
       });
       let newSum = sum + dealerCount;
+      let hitAces =
+        data?.cards.filter((card) => card.value === "ACE").length + aces;
+      while (newSum > 21 && hitAces > 0) {
+        newSum -= 10;
+        hitAces -= 1;
+      }
       setDealerHitCard(data?.cards);
       setDealerCount(newSum);
+      setDealerAces(hitAces);
     });
   };
 
@@ -280,6 +316,7 @@ function App() {
                   tieCount={tieCount}
                   resetHand={handleResetHand}
                   isDealersTurn={isDealersTurn}
+                  isHandComplete={isHandComplete}
                   hiddenDealerCount={hiddenDealerCount}
                   selectedCard={selectedCard}
                 />

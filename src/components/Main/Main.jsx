@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import CardSection from "../CardSection/CardSection";
 import "./Main.css";
 
+import back from "../../assets/jakes-casino-back.png";
+import user from "../../assets/jakes-casino-profile.png";
+
 function Main({
   drawCards,
   hitMe,
@@ -22,9 +25,13 @@ function Main({
   isDealersTurn,
   hiddenDealerCount,
   selectedCard,
+  isHandComplete,
 }) {
   const buttonClassName = showButton ? "main__btn" : "main__btn-hidden";
   const buttonClassNameHit = showButton ? "main__btn-hidden" : "main__btn";
+  const buttonClassNameReset = isHandComplete
+    ? "main__btn"
+    : "main__btn-hidden";
   const hideDealerCount = isDealersTurn ? dealerCount : hiddenDealerCount;
 
   return (
@@ -34,14 +41,15 @@ function Main({
         BlackJack by pressing the button below.
       </p>
       <Link to="/">
-        <button className="main__btn-home">Home</button>
+        <button className="main__btn-home">
+          <img src={back} />
+        </button>
       </Link>
       <Link to="/user">
-        <button className="main__btn-user">User</button>
+        <button className="main__btn-user">
+          <img src={user} />
+        </button>
       </Link>
-      <button type="button" onClick={resetHand} className="main__btn-user">
-        Reset
-      </button>
       <div className="main__caption">
         <p className="main__caption-user">
           User Score: {playerCount} User Wins: {winCount}
@@ -68,6 +76,13 @@ function Main({
       </button>
       <button type="button" onClick={stay} className={buttonClassNameHit}>
         Stay...
+      </button>
+      <button
+        type="button"
+        onClick={resetHand}
+        className={buttonClassNameReset}
+      >
+        Run it back!
       </button>
     </main>
   );
