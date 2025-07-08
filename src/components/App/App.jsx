@@ -5,12 +5,7 @@ import Homepage from "../Homepage/Homepage";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import UserPage from "../UserPage/UserPage";
-import {
-  getDeck,
-  drawCards,
-  drawDealerCards,
-  hitMe,
-} from "../../utils/deckApi";
+import { getDeck, drawCards, hitMe } from "../../utils/deckApi";
 import "./App.css";
 
 function App() {
@@ -34,9 +29,8 @@ function App() {
   const [winCount, setWinCount] = useState(0);
   const [lossCount, setLossCount] = useState(0);
   const [tieCount, setTieCount] = useState(0);
-  const [cardValue, setCardValue] = useState(0);
   const [aces, setAces] = useState(0);
-  const [dealerAces, setDealerAces] = useState(0);
+  const [activeModal, setActiveModal] = useState("");
 
   const cardObj = {
     JACK: 10,
@@ -47,10 +41,10 @@ function App() {
 
   const cardMap = new Map(Object.entries(cardObj));
 
-  function moveCardBack() {
-    const positionElement = document.querySelector(".card-section__hit-card");
-    positionElement.style.left = 0 + "px";
-  }
+  // function moveCardBack() {
+  //   const positionElement = document.querySelector(".card-section__hit-card");
+  //   positionElement.style.left = 0 + "px";
+  // }
 
   const handleResetHand = () => {
     if (isHandComplete) {
@@ -71,7 +65,7 @@ function App() {
       setDealerHitCard([]);
       setAces(0);
       setDealerAces(0);
-      moveCardBack();
+      // moveCardBack();
     }
   };
 
@@ -103,7 +97,6 @@ function App() {
         setWinner("push");
         setIsHandComplete(true);
       }
-      console.log(numAces);
     });
   };
 
@@ -126,7 +119,6 @@ function App() {
         sum -= 10;
         numAces -= 1;
       }
-      setDealerAces(numAces);
       setDrawnDealerCards(data?.cards);
       setSelectedCard(data?.cards[1]);
       setDealerCount(sum);
@@ -151,14 +143,14 @@ function App() {
     });
   };
 
-  function moveCardLeft(pixelsToAdd) {
-    const positionElement = document.querySelector(".card-section__hit-card");
-    if (positionElement) {
-      const currentLeft = parseFloat(positionElement.style.left) || 0;
-      const newLeft = currentLeft + pixelsToAdd;
-      positionElement.style.left = newLeft + "px";
-    }
-  }
+  // function moveCardLeft(pixelsToAdd) {
+  //   const positionElement = document.querySelector(".card-section__hit-card");
+  //   if (positionElement) {
+  //     const currentLeft = parseFloat(positionElement.style.left) || 0;
+  //     const newLeft = currentLeft + pixelsToAdd;
+  //     positionElement.style.left = newLeft + "px";
+  //   }
+  // }
 
   const handleHitMe = () => {
     if (!isHandComplete) {
@@ -182,7 +174,7 @@ function App() {
         setHitCard(data?.cards);
         setPlayerCount(newSum);
         setAces(hitAces);
-        moveCardLeft(50);
+        // moveCardLeft(50);
       });
     }
   };
@@ -219,6 +211,14 @@ function App() {
     handleDrawnDealerCards();
     setShowButton(false);
     setShowCards(true);
+  };
+
+  const handleLoginClick = () => {
+    setActiveModal("Login");
+  };
+
+  const handleLoginClose = () => {
+    setActiveModal("");
   };
 
   useEffect(() => {
@@ -294,7 +294,16 @@ function App() {
         <div className="page__content">
           <Routes>
             <Route path="/" element={<Homepage />} />
-            <Route path="user" element={<UserPage />} />
+            <Route
+              path="user"
+              element={
+                <UserPage
+                  openModal={handleLoginClick}
+                  closeModal={handleLoginClose}
+                  isOpen={activeModal === "Login"}
+                />
+              }
+            />
             <Route
               path="game"
               element={
