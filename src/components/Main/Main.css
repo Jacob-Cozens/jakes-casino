@@ -1,0 +1,48 @@
+.main__text {
+  margin-bottom: 15px;
+  text-align: center;
+  background-color: aliceblue;
+  border-radius: 8px;
+  border: 2px solid #8a5608;
+}
+
+.main__caption {
+  position: relative;
+  margin: 10px 0 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  top: 50px;
+}
+
+.main__btn {
+  position: relative;
+  display: block;
+  margin: 4px auto;
+  border-radius: 8px;
+  cursor: pointer;
+  bottom: 300px;
+}
+
+.main__btn-home {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border: none;
+  background-color: #58d65c;
+  cursor: pointer;
+}
+
+.main__btn-user {
+  position: absolute;
+  right: 95px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  background-color: #58d65c;
+  cursor: pointer;
+}
+
+.main__btn-hidden {
+  visibility: hidden;
+}

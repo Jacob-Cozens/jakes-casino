@@ -1,0 +1,14 @@
+.page {
+  font-family: "Times New Roman", Times, serif;
+  background-color: #58d65c;
+  color: black;
+}
+
+.page__content {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
