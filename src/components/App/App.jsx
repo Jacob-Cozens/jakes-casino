@@ -30,6 +30,7 @@ function App() {
   const [lossCount, setLossCount] = useState(0);
   const [tieCount, setTieCount] = useState(0);
   const [aces, setAces] = useState(0);
+  const [dealerAces, setDealerAces] = useState(0);
   const [activeModal, setActiveModal] = useState("");
 
   const cardObj = {
@@ -119,6 +120,7 @@ function App() {
         sum -= 10;
         numAces -= 1;
       }
+      setDealerAces(numAces);
       setDrawnDealerCards(data?.cards);
       setSelectedCard(data?.cards[1]);
       setDealerCount(sum);
