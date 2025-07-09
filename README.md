@@ -22,7 +22,7 @@ This game of BlackJack is soft 17 and uses six decks. Once you run out of cards,
 
 **Deployment**
 
-[Link to Website](https://www.what2wear.crabdance.com)
+[Link to Website](https://jakes-casino.vercel.app/)
 
 **Link to Backend**
 
