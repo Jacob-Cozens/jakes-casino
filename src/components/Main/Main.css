@@ -23,11 +23,6 @@
   top: 50px;
 }
 
-.main__caption-tie {
-  position: absolute;
-  left: 628px;
-}
-
 .main__btn {
   position: relative;
   display: block;
@@ -58,4 +53,14 @@
 
 .main__btn-hidden {
   display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .main__btn {
+    top: 100px;
+  }
+
+  .main__caption {
+    font-size: 10px;
+  }
 }

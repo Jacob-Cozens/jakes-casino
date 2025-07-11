@@ -11,35 +11,39 @@ function CardSection({
   isDealersTurn,
 }) {
   const dealerCardImagesHidden = (
-    <div key={selectedCard.code}>
-      <img src={selectedCard.image} alt="cardimage" height={250} width={250} />
+    <div className="card-section__card" key={selectedCard.code}>
+      <img
+        className="card-section__card"
+        src={selectedCard.image}
+        alt="cardimage"
+      />
     </div>
   );
   const dealerCardImages = drawnDealerCards?.map((card) => {
     return (
       <div key={card.code}>
-        <img src={card.image} alt="cardimage" height={250} width={250} />;
+        <img className="card-section__card" src={card.image} alt="cardimage" />;
       </div>
     );
   });
   const playerCardImages = drawnCards?.map((card) => {
     return (
-      <div key={card.code}>
-        <img src={card.image} alt="" height={250} width={250} />;
+      <div className="cardsection__card-resize" key={card.code}>
+        <img className="card-section__card" src={card.image} alt="cardimage" />;
       </div>
     );
   });
   const hitCardImage = hitCard?.map((card) => {
     return (
       <div key={card.code}>
-        <img src={card.image} alt="" height={250} width={250} />;
+        <img className="card-section__card" src={card.image} alt="cardimage" />;
       </div>
     );
   });
   const dealerHitCardImage = dealerHitCard?.map((card) => {
     return (
       <div key={card.code}>
-        <img src={card.image} alt="" height={250} width={250} />;
+        <img className="card-section__card" src={card.image} alt="cardimage" />;
       </div>
     );
   });
@@ -62,7 +66,7 @@ function CardSection({
       </div>
       <div className="card-section__modal">
         <div className={hideBackofCard}>
-          {showCards && <img src={backOfCard} height={250} width={250} />}
+          {showCards && <img className="card-section__card" src={backOfCard} />}
         </div>
         {showCards && hideDealerCard}
         <div className="card-section__hit-card">
