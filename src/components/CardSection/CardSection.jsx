@@ -11,19 +11,37 @@ function CardSection({
   isDealersTurn,
 }) {
   const dealerCardImagesHidden = (
-    <img src={selectedCard.image} alt="cardimage" height={250} width={250} />
+    <div key={selectedCard.code}>
+      <img src={selectedCard.image} alt="cardimage" height={250} width={250} />
+    </div>
   );
   const dealerCardImages = drawnDealerCards?.map((card) => {
-    return <img src={card.image} alt="cardimage" height={250} width={250} />;
+    return (
+      <div key={card.code}>
+        <img src={card.image} alt="cardimage" height={250} width={250} />;
+      </div>
+    );
   });
   const playerCardImages = drawnCards?.map((card) => {
-    return <img src={card.image} alt="" height={250} width={250} />;
+    return (
+      <div key={card.code}>
+        <img src={card.image} alt="" height={250} width={250} />;
+      </div>
+    );
   });
   const hitCardImage = hitCard?.map((card) => {
-    return <img src={card.image} alt="" height={250} width={250} />;
+    return (
+      <div key={card.code}>
+        <img src={card.image} alt="" height={250} width={250} />;
+      </div>
+    );
   });
   const dealerHitCardImage = dealerHitCard?.map((card) => {
-    return <img src={card.image} alt="" height={250} width={250} />;
+    return (
+      <div key={card.code}>
+        <img src={card.image} alt="" height={250} width={250} />;
+      </div>
+    );
   });
 
   const hideDealerCard = isDealersTurn
