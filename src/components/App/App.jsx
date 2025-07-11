@@ -71,78 +71,86 @@ function App() {
   };
 
   const handleDrawnCards = () => {
-    drawCards(deckId).then((data) => {
-      let sum = data?.cards.reduce((acc, card) => {
-        if (cardMap.has(card.value)) {
-          return acc + cardMap.get(card.value);
+    drawCards(deckId)
+      .then((data) => {
+        let sum = data?.cards.reduce((acc, card) => {
+          if (cardMap.has(card.value)) {
+            return acc + cardMap.get(card.value);
+          }
+          return acc + Number(card.value);
+        }, 0);
+        let numAces = data?.cards.filter((card) => card.value === "ACE").length;
+        if (sum === 22) {
+          sum -= 10;
+          numAces -= 1;
         }
-        return acc + Number(card.value);
-      }, 0);
-      let numAces = data?.cards.filter((card) => card.value === "ACE").length;
-      if (sum === 22) {
-        sum -= 10;
-        numAces -= 1;
-      }
-      setAces(numAces);
-      setDrawnCards(data?.cards);
-      setPlayerCount(sum);
+        setAces(numAces);
+        setDrawnCards(data?.cards);
+        setPlayerCount(sum);
 
-      if (sum === 21 && dealerCount !== 21) {
-        setIsDealersTurn(true);
-        setIsBlackJack(true);
-        setWinner("player");
-        setIsHandComplete(true);
-      }
-      if (sum === 21 && dealerCount === 21) {
-        setIsDealersTurn(true);
-        setWinner("push");
-        setIsHandComplete(true);
-      }
-    });
+        if (sum === 21 && dealerCount !== 21) {
+          setIsDealersTurn(true);
+          setIsBlackJack(true);
+          setWinner("player");
+          setIsHandComplete(true);
+        }
+        if (sum === 21 && dealerCount === 21) {
+          setIsDealersTurn(true);
+          setWinner("push");
+          setIsHandComplete(true);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const handleDrawnDealerCards = () => {
-    drawCards(deckId).then((data) => {
-      let sum = data?.cards.reduce((acc, card) => {
-        if (cardMap.has(card.value)) {
-          return acc + cardMap.get(card.value);
+    drawCards(deckId)
+      .then((data) => {
+        let sum = data?.cards.reduce((acc, card) => {
+          if (cardMap.has(card.value)) {
+            return acc + cardMap.get(card.value);
+          }
+          return acc + Number(card.value);
+        }, 0);
+        let hiddenSum = data?.cards.reduce((acc, card) => {
+          if (cardMap.has(card.value)) {
+            return cardMap.get(card.value);
+          }
+          return Number(card.value);
+        });
+        let numAces = data?.cards.filter((card) => card.value === "ACE").length;
+        if (sum === 22 || hiddenSum === 22) {
+          sum -= 10;
+          numAces -= 1;
         }
-        return acc + Number(card.value);
-      }, 0);
-      let hiddenSum = data?.cards.reduce((acc, card) => {
-        if (cardMap.has(card.value)) {
-          return cardMap.get(card.value);
+        setDealerAces(numAces);
+        setDrawnDealerCards(data?.cards);
+        setSelectedCard(data?.cards[1]);
+        setDealerCount(sum);
+        setHiddenDealerCount(hiddenSum);
+        if (
+          (sum === 21 && playerCount !== 21) ||
+          (hiddenSum === 21 && playerCount !== 21)
+        ) {
+          setIsDealersTurn(true);
+          setIsBlackJack(true);
+          setWinner("dealer");
+          setIsHandComplete(true);
         }
-        return Number(card.value);
+        if (
+          (sum === 21 && playerCount === 21) ||
+          (hiddenSum === 21 && playerCount === 21)
+        ) {
+          setIsDealersTurn(true);
+          setWinner("push");
+          setIsHandComplete(true);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
       });
-      let numAces = data?.cards.filter((card) => card.value === "ACE").length;
-      if (sum === 22 || hiddenSum === 22) {
-        sum -= 10;
-        numAces -= 1;
-      }
-      setDealerAces(numAces);
-      setDrawnDealerCards(data?.cards);
-      setSelectedCard(data?.cards[1]);
-      setDealerCount(sum);
-      setHiddenDealerCount(hiddenSum);
-      if (
-        (sum === 21 && playerCount !== 21) ||
-        (hiddenSum === 21 && playerCount !== 21)
-      ) {
-        setIsDealersTurn(true);
-        setIsBlackJack(true);
-        setWinner("dealer");
-        setIsHandComplete(true);
-      }
-      if (
-        (sum === 21 && playerCount === 21) ||
-        (hiddenSum === 21 && playerCount === 21)
-      ) {
-        setIsDealersTurn(true);
-        setWinner("push");
-        setIsHandComplete(true);
-      }
-    });
   };
 
   // function moveCardLeft(pixelsToAdd) {
@@ -156,50 +164,58 @@ function App() {
 
   const handleHitMe = () => {
     if (!isHandComplete) {
-      hitMe(deckId).then((data) => {
+      hitMe(deckId)
+        .then((data) => {
+          let sum = +data?.cards.map((card) => {
+            if (cardMap.has(card.value)) {
+              return cardMap.get(card.value);
+            }
+            return Number(card.value);
+          });
+          let newSum = sum + playerCount;
+          let hitAces =
+            data?.cards.filter((card) => card.value === "ACE").length + aces;
+          while (newSum > 21 && hitAces > 0) {
+            newSum -= 10;
+            hitAces -= 1;
+          }
+          if (newSum === 21) {
+            setIsDealersTurn(true);
+          }
+          setHitCard(data?.cards);
+          setPlayerCount(newSum);
+          setAces(hitAces);
+          // moveCardLeft(50);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+
+  const handleDealerHit = () => {
+    hitMe(deckId)
+      .then((data) => {
         let sum = +data?.cards.map((card) => {
           if (cardMap.has(card.value)) {
             return cardMap.get(card.value);
           }
           return Number(card.value);
         });
-        let newSum = sum + playerCount;
+        let newSum = sum + dealerCount;
         let hitAces =
           data?.cards.filter((card) => card.value === "ACE").length + aces;
         while (newSum > 21 && hitAces > 0) {
           newSum -= 10;
           hitAces -= 1;
         }
-        if (newSum === 21) {
-          setIsDealersTurn(true);
-        }
-        setHitCard(data?.cards);
-        setPlayerCount(newSum);
-        setAces(hitAces);
-        // moveCardLeft(50);
+        setDealerHitCard(data?.cards);
+        setDealerCount(newSum);
+        setDealerAces(hitAces);
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    }
-  };
-
-  const handleDealerHit = () => {
-    hitMe(deckId).then((data) => {
-      let sum = +data?.cards.map((card) => {
-        if (cardMap.has(card.value)) {
-          return cardMap.get(card.value);
-        }
-        return Number(card.value);
-      });
-      let newSum = sum + dealerCount;
-      let hitAces =
-        data?.cards.filter((card) => card.value === "ACE").length + aces;
-      while (newSum > 21 && hitAces > 0) {
-        newSum -= 10;
-        hitAces -= 1;
-      }
-      setDealerHitCard(data?.cards);
-      setDealerCount(newSum);
-      setDealerAces(hitAces);
-    });
   };
 
   const handleStay = () => {
@@ -224,9 +240,13 @@ function App() {
   };
 
   useEffect(() => {
-    getDeck().then((data) => {
-      setDeckId(data.deck_id);
-    });
+    getDeck()
+      .then((data) => {
+        setDeckId(data.deck_id);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   useEffect(() => {
