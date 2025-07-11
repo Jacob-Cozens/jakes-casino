@@ -1,4 +1,8 @@
 .main__text {
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.2;
   margin-bottom: 15px;
   text-align: center;
   background-color: aliceblue;
@@ -7,6 +11,10 @@
 }
 
 .main__caption {
+  font-family: "Cabinet Grotesk";
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.2;
   position: relative;
   margin: 10px 0 0 0;
   display: flex;
@@ -15,13 +23,18 @@
   top: 50px;
 }
 
+.main__caption-tie {
+  position: absolute;
+  left: 628px;
+}
+
 .main__btn {
   position: relative;
   display: block;
   margin: 4px auto;
   border-radius: 8px;
   cursor: pointer;
-  bottom: 300px;
+  bottom: 325px;
 }
 
 .main__btn-home {
@@ -44,5 +57,5 @@
 }
 
 .main__btn-hidden {
-  visibility: hidden;
+  display: none;
 }

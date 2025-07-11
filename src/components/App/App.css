@@ -1,5 +1,8 @@
+body {
+  overflow: hidden;
+}
+
 .page {
-  font-family: "Times New Roman", Times, serif;
   background-color: #58d65c;
   color: black;
 }

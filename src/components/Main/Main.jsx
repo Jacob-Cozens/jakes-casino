@@ -54,7 +54,7 @@ function Main({
         <p className="main__caption-user">
           User Score: {playerCount} User Wins: {winCount}
         </p>
-        <p className="main__caption">Tie Count: {tieCount}</p>
+        <p className="main__caption-tie">Tie Count: {tieCount}</p>
         <p className="main__caption-dealer">
           Dealer Score: {hideDealerCount} Dealer Wins: {lossCount}
         </p>
