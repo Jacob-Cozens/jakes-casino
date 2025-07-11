@@ -14,6 +14,7 @@ This game of BlackJack is soft 17 and uses six decks. Once you run out of cards,
 - CSS
 - BEM Methodology
 - Flexbox
+- Responsive design
 - Grid
 - Routers
 - Hooks
