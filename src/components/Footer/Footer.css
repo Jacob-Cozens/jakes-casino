@@ -1,0 +1,12 @@
+.footer {
+  font-family: "Times New Roman", Times, serif;
+  position: absolute;
+  bottom: 1px;
+  display: flex;
+  justify-content: space-between;
+  width: 88%;
+}
+
+.footer div {
+  color: white;
+}
